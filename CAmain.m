@@ -2,18 +2,18 @@ clear
 close all
 
 %% Signal Initialization
-list = dir('P:\Calcium Data Analysis\Emre\Data files\PFF+3d\control\*.csv'); %Insert the folder where .csv files of regions are
+LIST = dir(''); %Insert the folder where .csv files of regions are
 
-for n = 1 : size(list) %n regions imaged
+for n = 1 : size(LIST) %n regions imaged
 
     
-RawSignal = readmatrix([list(n).folder '\' list(n).name]); %
+RawSignal = readmatrix([LIST(n).folder '\' LIST(n).name]);
 
 Background = RawSignal(3:end,end-2); %taking the background fluorescence (found in the third to last column, i.e. last ROI from ImageJ)
 
-CAsignal = RawSignal(3:end,1:end-3)-Background; %Substracting background
+CAsignal = RawSignal(3:end,1:end-3)-Background; %Subtracting background
 
-for i = 1:size(CAsignal,2) %neurons (columns) detected in the region of interest
+for i = 1:size(CAsignal,2) %neurons (columns) detected in the imaged region
     %% 10 point MA filter
 
     wts = [1/20; repmat(1/10,9,1); 1/20];  
@@ -105,4 +105,4 @@ end
 Group_Data_Matrix = cell2mat(Group_Data_Cell);
 
 % Export data into an excel sheet
-writematrix(Group_Data_Matrix, '[folder path (with a new filename or an existing filename at the end)]', 'Sheet', '[Which Sheet in Excel you want to paste the data in]', 'Range', '[starting cell in Excel sheet]');
+writematrix(Group_Data_Matrix, 'folder path', 'Sheet', 'sheet_name.xlsx', 'Range', 'A1');
