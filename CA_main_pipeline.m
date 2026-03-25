@@ -16,7 +16,7 @@ close all
 %% Signal Initialization
 LIST = dir(''); %Insert the folder where .csv files of regions are
 
-for n = 1 : size(LIST) %n regions imaged
+for n = 1 : size(LIST,1) %n regions imaged
 
     
 RawSignal = readmatrix([LIST(n).folder '\' LIST(n).name]);
